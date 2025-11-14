@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -54,7 +54,7 @@ fun Struct(navController: NavController) {
     //  Comics= listOf(Comics(icon = R.drawable.ej1, titulo = 1),Comics(icon = R.drawable.ej2, titulo = 2), Comics(icon = R.drawable.ej3, titulo = 3), Comics(icon = R.drawable.ej4, titulo = 4))
     Scaffold(
         topBar = { Topbar() },
-        content = { paddingValues -> Content(paddingValues = paddingValues, navController) }
+        content = { paddingValues -> Content1(paddingValues = paddingValues, navController) }
     )
 }
 
@@ -89,7 +89,7 @@ fun Topbar() {
 }
 
 @Composable
-fun Content(paddingValues: PaddingValues, navController: NavController) {
+fun Content1(paddingValues: PaddingValues, navController: NavController) {
     val comicNum = listOf(
         R.drawable.tristeza to "Tristeza",
         R.drawable.frustraci_n to "Frustración",
@@ -97,10 +97,19 @@ fun Content(paddingValues: PaddingValues, navController: NavController) {
         R.drawable.enojo to "Enojo",
         R.drawable.sorpresa to "Sorpresa"
     )
-
-    LazyColumn(
+    Text(text="Categoría 1", modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 130.dp)
+        ,
+        color = Color(0xff0D1C41),
+        textAlign = TextAlign.Start,
+        fontWeight = FontWeight.Bold,
+        fontStyle = FontStyle.Italic,
+        softWrap = true,
+        fontSize = 30.sp)
+    LazyRow (
         modifier = Modifier
-            .padding(top = 90.dp)
+            .padding(top = 170.dp, bottom = 500.dp)
             .fillMaxWidth()
             //.height(1000.dp)
             .background(
@@ -111,8 +120,10 @@ fun Content(paddingValues: PaddingValues, navController: NavController) {
                     )
                 )
             ),
+
         state = rememberLazyListState()
     ) {
+
         items(comicNum) { (drawable, name) ->
             Maincard(drawable = drawable, name = name, navController = navController)
         }
@@ -126,11 +137,11 @@ fun Maincard(@DrawableRes drawable: Int, name: String, navController: NavControl
             containerColor = Color.White
             //contentColor = Color(0x273149)
         ),
-        shape = RoundedCornerShape(80.dp),
+        shape = RoundedCornerShape(30.dp),
         modifier = Modifier
            // .offset(y = 70.dp)
-            .padding(vertical = 10.dp)
-            .padding(40.dp)
+            .padding(vertical = 0.dp)
+            .padding(15.dp)
             .fillMaxWidth()
             .clickable(onClick = {
                 if (name == "Tristeza") {
@@ -170,9 +181,9 @@ fun Maincard(@DrawableRes drawable: Int, name: String, navController: NavControl
 @Composable
 fun Tarjeta(@DrawableRes drawable: Int) {
     OutlinedCard(
-        shape = RoundedCornerShape(40.dp),
+        shape = RoundedCornerShape(20.dp),
         modifier = Modifier
-            .padding(40.dp)
+            .padding(2.dp)
             .fillMaxWidth()
     ) {
         Image(
@@ -186,7 +197,6 @@ fun Tarjeta(@DrawableRes drawable: Int) {
         )
     }
 }
-
 
 
 
