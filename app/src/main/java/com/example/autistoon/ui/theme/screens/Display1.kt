@@ -90,7 +90,7 @@ fun BackBtn(navController: NavController) {
 @Composable
 fun Carousel(paddingValues: PaddingValues) {
     val hist = listOf(
-        R.drawable.ansiedad1,
+        R.drawable.testia1,
         R.drawable.image2,
         R.drawable.ansiedad3,
         R.drawable.ansiedad4,
