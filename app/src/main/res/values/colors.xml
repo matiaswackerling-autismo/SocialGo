@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background1">#F8F8F8</color>
+    <color name="background2">#EEEEEE</color>
+    <color name="gray_font">#333333</color>
+    <color name="blue_font">#2C3E50</color>
+    <color name="skyblue_det">#4FC3F7</color>
+    <color name="mint_det">#81C784</color>
+    <color name="SocialGoTitle">#404b54</color>
+    <color name="Accent_Green">#2E8B57</color>
+    <color name="Light_Accent_Green">#3CB371</color>
+    <color name="cyan_green">#c5ddd4</color>
+    <color name="card_back">#e8f5e9</color>
+    <color name="accent_gray">#8c96a0</color>
 </resources>

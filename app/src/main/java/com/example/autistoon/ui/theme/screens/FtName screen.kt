@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import  com.example.autistoon.R
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import com.example.autistoon.data.SharedData
 
 @Preview(showBackground = true)
@@ -56,7 +57,7 @@ fun Text1() {
         Text(
             text = "Me gustaría saber tu nombre!",
             fontSize = 45.sp,
-            color = Color(0xFF445e91),
+            color = colorResource(id=R.color.blue_font),
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .fillMaxHeight()
@@ -81,15 +82,19 @@ fun Nombre(inname: String, nameChange: (String)-> Unit) {
                 .size(width = 450.dp, height = 100.dp),
             label = { Text("Escribe tu nombre", fontSize = 28.sp) },
             colors = TextFieldDefaults.colors(
-                unfocusedIndicatorColor = Color(0xff445e91),
-                unfocusedContainerColor = Color(0xffffffff),
-                unfocusedLabelColor = Color(0xff445e91)
+                unfocusedIndicatorColor = colorResource(id=R.color.Light_Accent_Green),
+                unfocusedContainerColor = colorResource(id=R.color.background1),
+                unfocusedLabelColor = colorResource(id=R.color.SocialGoTitle),
+                focusedContainerColor = colorResource(id = R.color.background1),
+                focusedTextColor = colorResource(id = R.color.SocialGoTitle),
+                focusedIndicatorColor = colorResource(id = R.color.Light_Accent_Green),
+                focusedLabelColor = colorResource(id = R.color.SocialGoTitle)
             ),
             leadingIcon = {
                 Icon(modifier = Modifier.size(40.dp),
                     painter = painterResource(id = R.drawable.baseline_person),
                     contentDescription = null,
-                    tint = Color(0xff445e91)
+                    tint = colorResource(id=R.color.Light_Accent_Green)
                 )
             }
         )
@@ -105,18 +110,20 @@ fun Enter(navController: NavController, inname: String ) {
             onClick = {
                 if (inname.isNotEmpty()) {
                     SharedData.sharedText = inname
-                    navController.navigate(NavigationItem.Menu.route)
+                    navController.navigate(NavigationItem.Menu.route){popUpTo(Screen.FtName.name)
+                    { inclusive = true }
+                        launchSingleTop = true}
                 }
                 else{
-                    Toast.makeText(context, "Por favor ingresa tu nombre!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Para empezar... ingresa tu nombre!", Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier.padding(top = 870.dp) .size(width = 250.dp, height = 90.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xff445e91))
+            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id=R.color.Accent_Green))
         )
         {
             Text(
-                "Entrar", fontSize = 30.sp, color = Color.White
+                "Navegar", fontSize = 30.sp, color = colorResource(id=R.color.background1)
             )
 
         }

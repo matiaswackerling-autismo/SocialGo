@@ -1,11 +1,17 @@
 package com.example.autistoon.ui.theme.screens
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navArgument
+import com.example.autistoon.data.Historia
+import com.example.autistoon.data.MenuViewModel
+import com.example.autistoon.data.StoryViewModel
 
 
 @Composable
@@ -21,7 +27,7 @@ fun AppNavHost(
     ) {
         composable(route = NavigationItem.FT.route)
         {
-            FS(navController)
+            OnboardingScreen(navController)
 
         }
         composable(route = NavigationItem.FtName.route)
@@ -30,27 +36,46 @@ fun AppNavHost(
         }
         composable(route = NavigationItem.Menu.route)
         {
-            Struct(navController)
+            menuScreen(navController)
         }
-        composable(route = NavigationItem.Display1.route)
+        composable(route = "detalle/{storyTitle}",
+            arguments = listOf(navArgument("storyTitle"){ type = NavType.StringType}))
         {
-            Display1(navController)
+            backStackEntry ->
+            val storyTitle = backStackEntry.arguments?.getString("storyTitle") ?: ""
+
+            val viewModel: MenuViewModel = viewModel()
+            val historia = viewModel.categorias
+                .flatMap {it.items}
+                .first{it.storyTitle == storyTitle}
+
+            DetailScreen(historia = historia, navController)
         }
-        composable(route = NavigationItem.Display2.route)
-        {
-            Display2(navController)
-        }
-        composable(route = NavigationItem.Display3.route)
-        {
-            Display3(navController)
-        }
-        composable(route = NavigationItem.Display4.route)
-        {
-            Display4(navController)
-        }
-        composable(route = NavigationItem.Display5.route)
-        {
-            Display5(navController)
+        composable(
+            route = "leerHistoria/{storyTitle}",
+            arguments = listOf(navArgument("storyTitle") { type = NavType.StringType })
+        ) { backStackEntry ->
+
+            val storyTitle = backStackEntry.arguments?.getString("storyTitle") ?: ""
+
+            val viewModel: MenuViewModel = viewModel()
+            val historia = viewModel.categorias
+                .flatMap { it.items }
+                .first { it.storyTitle == storyTitle }
+
+            // NUEVO VIEWMODEL PARA LAS HISTORIAS AVANZADAS
+            val storyVM: StoryViewModel = viewModel()
+
+            // Cargar las páginas avanzadas SOLO una vez al entrar
+            LaunchedEffect(historia.storyTitle) {
+                storyVM.loadStory(historia.pages)
+            }
+
+            StoryReaderAdvancedScreen(
+                historia = historia,
+                storyVM = storyVM,
+                navController = navController
+            )
         }
 
 
