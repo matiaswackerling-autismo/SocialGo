@@ -7,8 +7,8 @@ import androidx.compose.ui.graphics.Color
 
 
 enum class BubbleType {
-    DIALOGUE, // Viñeta rectangular normal
-    THOUGHT // Viñeta de nube (ThoughtBubbleShape)
+    DIALOGUE, // Viñeta normal
+    THOUGHT // Viñeta de nube
 }
 enum class StaticPosition {
     TOP, BOTTOM
@@ -21,14 +21,14 @@ data class Recomendacion(
 data class StoryPageData(
     val baseImage: Int,
     val panels: List<Panel> = emptyList(),
-    val staticTexts: List<staticText> = emptyList(),
+    val staticTexts: List<StaticText> = emptyList(),
     val recomendaciones: List<Recomendacion> = emptyList()
 )
 
-data class staticText(
+data class StaticText(
     val text: String,
     val position: StaticPosition,
-    val backgroundColor: Color = Color.Transparent // Por defecto transparente para que luzca integrado
+    val backgroundColor: Color = Color.Transparent
 )
 
 class Panel(
@@ -40,13 +40,12 @@ class Panel(
     val type: BubbleType,
     initialVisibility: Boolean = false
 ){
-    // Esta línea es la magia que conecta tu ViewModel con la Animación
     var isVisible by mutableStateOf(initialVisibility)
 }
 
 fun page(
     base: Int,
-    staticTexts: List<staticText> = emptyList(),
+    staticTexts: List<StaticText> = emptyList(),
     vararg panels: Panel
 ): StoryPageData {
     return StoryPageData(
@@ -60,7 +59,7 @@ fun pageRecs(
     recomendaciones: List<Recomendacion>
 ): StoryPageData {
     return StoryPageData(
-        baseImage = 0, // Sin fondo
+        baseImage = 0,
         panels = emptyList(),
         staticTexts = emptyList(),
         recomendaciones = recomendaciones
@@ -75,7 +74,6 @@ fun p(
     type: BubbleType
 ) = Panel(text, x, y, width, height, type )
 
-// Función para crear un Panel de DIÁLOGO (Rectangular)
 fun d(
     text: String,
     x: Int,
@@ -84,7 +82,6 @@ fun d(
     height: Int
 ) = p(text, x, y, width, height, BubbleType.DIALOGUE)
 
-// Función para crear un Panel de PENSAMIENTO (Nube)
 fun t(
     text: String,
     x: Int,
@@ -93,6 +90,6 @@ fun t(
     height: Int
 ) = p(text, x, y, width, height, BubbleType.THOUGHT)
 
-fun sTop(text: String) = staticText(text, StaticPosition.TOP)
-fun sBottom(text: String) = staticText(text, StaticPosition.BOTTOM)
+fun sTop(text: String) = StaticText(text, StaticPosition.TOP)
+fun sBottom(text: String) = StaticText(text, StaticPosition.BOTTOM)
 fun rec(img: Int, txt: String) = Recomendacion(img, txt)

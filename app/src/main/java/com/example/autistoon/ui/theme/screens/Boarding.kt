@@ -44,7 +44,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
 import androidx.navigation.NavController
 import com.example.autistoon.R
 import com.example.autistoon.data.OnboardingItem
@@ -88,10 +87,6 @@ fun OnboardingIndicator(
     }
 }
 
-/* ---------------------------------------------------
-   PÁGINA DE ONBOARDING
---------------------------------------------------- */
-
 @Composable
 fun OnboardingPage(
     item: OnboardingItem,
@@ -99,7 +94,7 @@ fun OnboardingPage(
     onFinish: () -> Unit
 ) {
     val configuration = LocalConfiguration.current
-    val isTablet = configuration.screenWidthDp >= 600 // CAMBIO
+    val isTablet = configuration.screenWidthDp >= 600
 
     Column(
         modifier = Modifier
@@ -112,9 +107,9 @@ fun OnboardingPage(
             painter = painterResource(id = item.image),
             contentDescription = item.title,
             modifier = Modifier
-                .fillMaxWidth(0.85f)                // CAMBIO
+                .fillMaxWidth(0.85f)
                 .aspectRatio(1f)
-                .heightIn(                          // CAMBIO
+                .heightIn(
                     min = 180.dp,
                     max = if (isTablet) 420.dp else 260.dp
                 )
@@ -128,7 +123,7 @@ fun OnboardingPage(
             text = item.title,
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
-            fontSize = if (isTablet) 26.sp else 20.sp,   // CAMBIO
+            fontSize = if (isTablet) 26.sp else 20.sp,
             textAlign = TextAlign.Center,
             color = colorResource(id = R.color.SocialGoTitle)
         )
@@ -138,10 +133,10 @@ fun OnboardingPage(
         Text(
             text = item.description,
             style = MaterialTheme.typography.bodyLarge,
-            fontSize = if (isTablet) 18.sp else 14.sp,   // CAMBIO
+            fontSize = if (isTablet) 18.sp else 14.sp,
             textAlign = TextAlign.Center,
             color = colorResource(id = R.color.gray_font),
-            lineHeight = if (isTablet) 22.sp else 18.sp  // CAMBIO
+            lineHeight = if (isTablet) 22.sp else 18.sp
         )
 
         Spacer(modifier = Modifier.height(48.dp))
@@ -150,9 +145,9 @@ fun OnboardingPage(
             Button(
                 onClick = onFinish,
                 modifier = Modifier
-                    .fillMaxWidth(0.4f)                 // CAMBIO
-                    .widthIn(max = 200.dp)              // CAMBIO
-                    .height(48.dp),                     // CAMBIO
+                    .fillMaxWidth(0.4f)
+                    .widthIn(max = 200.dp)
+                    .height(48.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(id = R.color.Accent_Green)
@@ -160,16 +155,12 @@ fun OnboardingPage(
             ) {
                 Text(
                     "Comenzar",
-                    fontSize = if (isTablet) 18.sp else 14.sp // CAMBIO
+                    fontSize = if (isTablet) 18.sp else 14.sp
                 )
             }
         }
     }
 }
-
-/* ---------------------------------------------------
-   SCREEN PRINCIPAL
---------------------------------------------------- */
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -190,7 +181,7 @@ fun OnboardingScreen(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 64.dp, max = 96.dp) // CAMBIO
+                    .heightIn(min = 64.dp, max = 96.dp)
                     .padding(bottom = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

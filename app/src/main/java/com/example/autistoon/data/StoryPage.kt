@@ -20,37 +20,25 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.Alignment
-import androidx.compose.runtime.key // ¡Importante para las correcciones de animación!
+import androidx.compose.runtime.key
 import androidx.compose.ui.draw.clip
-
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.example.autistoon.R
 
-// Asumo que tienes R.drawable y R.color disponibles
-// ... (Otras importaciones necesarias)
-
-// ----------------------------------------------------
-// A. Función de Dibujo del Fondo de Nube (Usada por drawBehind)
-// ----------------------------------------------------
 private val MASTER_THOUGHT_PATH = Path().apply {
-    val br = 15f // El radio de las burbujas pequeñas
+    val br = 15f
 
-    // Cuerpo central (un poco más pequeño para dejar espacio a las burbujas)
     addRoundRect(
         androidx.compose.ui.geometry.RoundRect(
             rect = Rect(15f, 15f, 85f, 85f),
@@ -58,7 +46,7 @@ private val MASTER_THOUGHT_PATH = Path().apply {
         )
     )
 
-    // Burbujas Superiores (Usando br para el tamaño)
+    // Burbujas Superiores
     addOval(Rect(12f, 17f - br, 37f, 15f + br/2))
     addOval(Rect(32f, 15f - br, 59f, 15f + br/2))
     addOval(Rect(52f, 15f - br, 85f, 15f + br/2))
@@ -80,7 +68,6 @@ private val MASTER_THOUGHT_PATH = Path().apply {
 @Composable
 fun PanelBubble(panel: Panel, width: Dp, height: Dp) {
     val bubbleColor = Color.White
-    // Fuente un poco más pequeña para que quepa mejor
     val maxDevWidth = LocalConfiguration.current
     val isTablet = maxDevWidth.screenWidthDp >= 600
     val calculatedFontSize = if (isTablet) 16.sp else 10.sp
@@ -118,7 +105,6 @@ fun PanelBubble(panel: Panel, width: Dp, height: Dp) {
             color = Color.Black,
             textAlign = TextAlign.Center,
             modifier = Modifier
-                // Aumentamos el padding: el texto solo ocupará el 70% central
                 .fillMaxWidth(0.8f)
                 .padding(vertical = 8.dp),
             softWrap = true,
@@ -148,9 +134,7 @@ private fun AnimatedPanelContainer(
         }
     }
 }
-// ----------------------------------------------------
-// D. Componente StoryPage (Calcula proporciones y Renderiza)
-// ----------------------------------------------------
+
 @Composable
 fun StoryPage(page: StoryPageData) {
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -164,7 +148,6 @@ fun StoryPage(page: StoryPageData) {
         val widthFactor = if(isTablet) 1f else 1f
         val positionFactor = if (isTablet) 1f else 1.55f
 
-        // Escalas visuales según dispositivo
         val titleScale = if (isTablet) 0.03f else 0.024f
         val bodyScale = if (isTablet) 16.sp else 12.sp
         val staticTextScale = if (isTablet) 0.032f else 0.036f
@@ -173,9 +156,6 @@ fun StoryPage(page: StoryPageData) {
         val verticalPadding = if (isTablet) 46.dp else 18.dp
         val itemSpacing = if (isTablet) 14.dp else 12.dp
 
-        // ----------------------------------------------------
-        // Imagen base
-        // ----------------------------------------------------
         if (page.baseImage == 0) {
             Box(
                 modifier = Modifier
@@ -193,9 +173,6 @@ fun StoryPage(page: StoryPageData) {
             )
         }
 
-        // ----------------------------------------------------
-        // Recomendaciones
-        // ----------------------------------------------------
         if (page.recomendaciones.isNotEmpty()) {
             Column(
                 modifier = Modifier
@@ -258,9 +235,7 @@ fun StoryPage(page: StoryPageData) {
             }
         }
 
-        // ----------------------------------------------------
-        // Textos estáticos (arriba / abajo)
-        // ----------------------------------------------------
+
         page.staticTexts.forEach { staticText ->
 
             val alignment =
@@ -296,9 +271,6 @@ fun StoryPage(page: StoryPageData) {
             }
         }
 
-        // ----------------------------------------------------
-        // Panels (NO TOCAR LÓGICA)
-        // ----------------------------------------------------
         page.panels.forEachIndexed { index, panel ->
             key("${page.baseImage}_${index}") {
 

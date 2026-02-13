@@ -9,7 +9,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navArgument
-import com.example.autistoon.data.Historia
 import com.example.autistoon.data.MenuViewModel
 import com.example.autistoon.data.StoryViewModel
 
@@ -29,10 +28,6 @@ fun AppNavHost(
         {
             OnboardingScreen(navController)
 
-        }
-        composable(route = NavigationItem.FtName.route)
-        {
-            FirstTime(navController)
         }
         composable(route = NavigationItem.Menu.route)
         {
@@ -63,10 +58,9 @@ fun AppNavHost(
                 .flatMap { it.items }
                 .first { it.storyTitle == storyTitle }
 
-            // NUEVO VIEWMODEL PARA LAS HISTORIAS AVANZADAS
+
             val storyVM: StoryViewModel = viewModel()
 
-            // Cargar las páginas avanzadas SOLO una vez al entrar
             LaunchedEffect(historia.storyTitle) {
                 storyVM.loadStory(historia.pages)
             }

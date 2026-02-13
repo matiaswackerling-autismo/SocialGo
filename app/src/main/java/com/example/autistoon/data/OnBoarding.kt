@@ -9,7 +9,6 @@ data class OnboardingItem(
     @DrawableRes val image: Int
 )
 
-// Datos de Onboarding (REEMPLAZA ESTOS IDs con tus R.drawable reales)
 val onboardingItems = listOf(
     OnboardingItem(title = "¡Hola! Qué bueno tenerte aquí.", description = "Hoy es un gran momento para aprender algo nuevo.", image = R.drawable.new_logo_socialgo),
     OnboardingItem(title = "SocialGo te acompaña a desarrollar habilidades importantes.", description = "Aquí encontrarás lecturas prácticas para aprender y mejorar en diferentes situaciones diarias.", image = R.drawable.boarding_2),

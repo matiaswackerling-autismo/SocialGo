@@ -51,10 +51,10 @@ class MenuViewModel : ViewModel()
     )
 }
 
-fun cargarDescripcion(context: Context, rawId: Int, nombreUsuario: String): String {
+fun cargarDescripcion(context: Context, rawId: Int): String {
     val texto = context.resources.openRawResource(rawId)
         .bufferedReader()
         .use { it.readText() }
 
-    return texto.replace("{usuario}", nombreUsuario)
+    return texto
 }

@@ -7,7 +7,6 @@ import com.example.autistoon.data.pageRecs
 import com.example.autistoon.data.rec
 import com.example.autistoon.data.sBottom
 import com.example.autistoon.data.sTop
-import com.example.autistoon.data.staticText
 import com.example.autistoon.data.t
 
 val pagAmiscop_2 = listOf(
