@@ -69,8 +69,8 @@ private val MASTER_THOUGHT_PATH = Path().apply {
 fun PanelBubble(panel: Panel, width: Dp, height: Dp) {
     val bubbleColor = Color.White
     val maxDevWidth = LocalConfiguration.current
-    val isTablet = maxDevWidth.screenWidthDp >= 600
-    val calculatedFontSize = if (isTablet) 16.sp else 10.sp
+    val isTablet = maxDevWidth.screenWidthDp >= 600             //Umbral para cambio tablet-celular
+    val calculatedFontSize = if (isTablet) 16.sp else 10.sp     //Tamaño de fuente para viñetas. Modificar en caso de que no entren los textos
 
 
     Box(
@@ -108,7 +108,7 @@ fun PanelBubble(panel: Panel, width: Dp, height: Dp) {
                 .fillMaxWidth(0.8f)
                 .padding(vertical = 8.dp),
             softWrap = true,
-            lineHeight = calculatedFontSize * 1.1f
+            lineHeight = calculatedFontSize * 1.1f     //En caso de demasiada separación entre lineas, modificar: >1 agranda - <1 achica.
         )
     }
 }
@@ -139,14 +139,14 @@ private fun AnimatedPanelContainer(
 fun StoryPage(page: StoryPageData) {
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
 
-        val isTablet = maxWidth >= 600.dp
+        val isTablet = maxWidth >= 600.dp            //umbral tablet-celular
 
         val maxWidthPx = maxWidth
         val screenHeight = maxHeight
         val scaleFactor = maxWidthPx.value / 1000.0f
         val heightFactor = if(isTablet) 1f else 1.1f
         val widthFactor = if(isTablet) 1f else 1f
-        val positionFactor = if (isTablet) 1f else 1.55f
+        val positionFactor = if (isTablet) 1f else 1.55f        //Modificar los else en caso de que algo no se vea bien.
 
         val titleScale = if (isTablet) 0.03f else 0.024f
         val bodyScale = if (isTablet) 16.sp else 12.sp
@@ -167,7 +167,7 @@ fun StoryPage(page: StoryPageData) {
                 painter = painterResource(page.baseImage),
                 contentDescription = null,
                 modifier = Modifier
-                    .fillMaxHeight(if (isTablet) 0.7f else 0.6f)
+                    .fillMaxHeight(if (isTablet) 0.7f else 0.6f)              //Tamaño imagen en panel.
                     .align(Alignment.Center),
                 contentScale = ContentScale.Crop
             )
@@ -187,7 +187,7 @@ fun StoryPage(page: StoryPageData) {
                 Text(
                     text = "Recomendaciones",
                     color = colorResource(id = R.color.blue_font),
-                    fontSize = (screenHeight.value * titleScale).sp,
+                    fontSize = (screenHeight.value * titleScale).sp,         //tamaño letra recomendaciones: Titulo.
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = itemSpacing)
                 )
@@ -223,7 +223,7 @@ fun StoryPage(page: StoryPageData) {
                             Text(
                                 text = item.text,
                                 color = Color.Black,
-                                fontSize =  bodyScale,
+                                fontSize =  bodyScale,         //Tamaño descripciones recomendaciones
                                 lineHeight = if (isTablet) 20.sp else 14.sp,
                                 fontWeight = FontWeight.Medium,
                                 modifier = Modifier.weight(1f),
@@ -258,7 +258,7 @@ fun StoryPage(page: StoryPageData) {
                 Text(
                     text = staticText.text,
                     color = Color.Black,
-                    fontSize = (maxWidthPx.value * staticTextScale).sp,
+                    fontSize = (maxWidthPx.value * staticTextScale).sp,            //Tamaño de letras oraciones
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyLarge.copy(
                         shadow = Shadow(
